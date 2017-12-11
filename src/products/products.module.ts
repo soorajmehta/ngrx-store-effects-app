@@ -1,32 +1,43 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { Routes, RouterModule } from "@angular/router";
+import { ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
+
+import { reducres, effects } from "./store";
 
 // components
-import * as fromComponents from './components';
+import * as fromComponents from "./components";
 
 // containers
-import * as fromContainers from './containers';
+import * as fromContainers from "./containers";
+
+// guards
+import * as fromGuard from "./guards";
 
 // services
-import * as fromServices from './services';
+import * as fromServices from "./services";
 
 // routes
 export const ROUTES: Routes = [
   {
-    path: '',
-    component: fromContainers.ProductsComponent,
+    path: "",
+    canActivate: [fromGuard.PizzasGuard],
+    component: fromContainers.ProductsComponent
   },
   {
-    path: ':id',
-    component: fromContainers.ProductItemComponent,
+    path: "new",
+    canActivate: [fromGuard.PizzasGuard, fromGuard.ToppingsGuard],
+    component: fromContainers.ProductItemComponent
   },
   {
-    path: 'new',
-    component: fromContainers.ProductItemComponent,
-  },
+    path: ":pizzaId",
+    canActivate: [fromGuard.PizzaExistsGuard, fromGuard.ToppingsGuard],
+    component: fromContainers.ProductItemComponent
+  }
 ];
 
 @NgModule({
@@ -35,9 +46,11 @@ export const ROUTES: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forChild(ROUTES),
+    StoreModule.forFeature("products", reducres),
+    EffectsModule.forFeature(effects)
   ],
-  providers: [...fromServices.services],
+  providers: [...fromServices.services, ...fromGuard.guards],
   declarations: [...fromContainers.containers, ...fromComponents.components],
-  exports: [...fromContainers.containers, ...fromComponents.components],
+  exports: [...fromContainers.containers, ...fromComponents.components]
 })
 export class ProductsModule {}
