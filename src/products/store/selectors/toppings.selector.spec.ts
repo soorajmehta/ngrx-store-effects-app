@@ -69,4 +69,52 @@ describe("Toppings Selector", () => {
       expect(result).toEqual([1, 3]);
     });
   });
+
+  describe("getAllToppings", () => {
+    it("should return all toppings as an array", () => {
+      let result;
+
+      store.select(fromSelectors.getAllToppings).subscribe(value => {
+        result = value;
+      });
+
+      expect(result).toEqual([]);
+
+      store.dispatch(new fromActions.LoadToppingsSuccess(toppings));
+
+      expect(result).toEqual(toppings);
+    });
+  });
+
+  describe("getToppingsLoaded", () => {
+    it("should return toppings loaded state", () => {
+      let result;
+
+      store.select(fromSelectors.getToppingsLoaded).subscribe(value => {
+        result = value;
+      });
+
+      expect(result).toEqual(false);
+
+      store.dispatch(new fromActions.LoadToppingsSuccess([]));
+
+      expect(result).toEqual(true);
+    });
+  });
+
+  describe("getToppingsLoading", () => {
+    it("should return toppings loading state", () => {
+      let result;
+
+      store.select(fromSelectors.getToppingsLoading).subscribe(value => {
+        result = value;
+      });
+
+      expect(result).toEqual(false);
+
+      store.dispatch(new fromActions.LoadToppings());
+
+      expect(result).toEqual(true);
+    });
+  });
 });

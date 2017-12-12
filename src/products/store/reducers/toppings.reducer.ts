@@ -55,7 +55,7 @@ export function reducer(
         entities
       };
     }
-    case fromToppings.LOAD_TOPPINGS_SUCCESS: {
+    case fromToppings.LOAD_TOPPINGS_FAIL: {
       return {
         ...state,
         loaded: false,

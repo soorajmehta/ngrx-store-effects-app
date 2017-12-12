@@ -68,7 +68,7 @@ export function reducer(
       };
     }
 
-    case fromPizzas.REMOVE_PIZZA: {
+    case fromPizzas.REMOVE_PIZZA_SUCCESS: {
       const pizza = action.payload;
       const { [pizza.id]: removed, ...entities } = state.entities;
 

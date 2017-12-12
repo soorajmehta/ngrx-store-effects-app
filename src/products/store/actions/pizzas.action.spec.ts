@@ -112,4 +112,151 @@ describe("Pizzas Actions", () => {
       });
     });
   });
+
+  describe("CreatePizza Actions", () => {
+    describe("CreatePizza", () => {
+      it("should create an action", () => {
+        const payload = {
+          name: "Pizza #2",
+          toppings: [
+            { id: 1, name: "bacon" },
+            { id: 2, name: "tomato" },
+            { id: 3, name: "mashroom" }
+          ]
+        };
+
+        const action = new fromPizzas.CreatePizza(payload);
+        expect({ ...action }).toEqual({
+          type: fromPizzas.CREATE_PIZZA,
+          payload
+        });
+      });
+    });
+
+    describe("CreatePizza Fail", () => {
+      it("should creat an action", () => {
+        const payload: any = { message: "Load fail" };
+        const action = new fromPizzas.CreatePizzaFail(payload);
+
+        expect({ ...action }).toEqual({
+          type: fromPizzas.CREATE_PIZZA_FAIL,
+          payload
+        });
+      });
+    });
+
+    describe("CreatePizza Success", () => {
+      it("should create an action", () => {
+        const payload = {
+          id: 2,
+          name: "Pizza #2",
+          toppings: [{ id: 1, name: "bacon" }, { id: 2, name: "papper" }]
+        };
+        const action = new fromPizzas.CreatePizzaSuccess(payload);
+
+        expect({ ...action }).toEqual({
+          type: fromPizzas.CREATE_PIZZA_SUCCESS,
+          payload
+        });
+      });
+    });
+  });
+
+  describe("UpdatePizza Actions", () => {
+    describe("UpdatePizza", () => {
+      it("should create an action", () => {
+        const payload = {
+          name: "Pizza #2",
+          toppings: [
+            { id: 1, name: "bacon" },
+            { id: 2, name: "tomato" },
+            { id: 3, name: "mashroom" }
+          ]
+        };
+
+        const action = new fromPizzas.UpdatePizza(payload);
+
+        expect({ ...action }).toEqual({
+          type: fromPizzas.UPDATE_PIZZA,
+          payload
+        });
+      });
+    });
+
+    describe("UpdatePizza Fail", () => {
+      it("should create an action", () => {
+        const payload = { message: "Can not load" };
+        const action = new fromPizzas.UpdatePizzaFail(payload);
+        expect({ ...action }).toEqual({
+          type: fromPizzas.UPDATE_PIZZA_FAIL,
+          payload
+        });
+      });
+    });
+
+    describe("UpdatePizza Success", () => {
+      it("should create an action", () => {
+        const payload = {
+          id: 2,
+          name: "Pizza #2",
+          toppings: [{ id: 1, name: "bacon" }, { id: 2, name: "papper" }]
+        };
+        const action = new fromPizzas.UpdatePizzaSuccess(payload);
+
+        expect({ ...action }).toEqual({
+          type: fromPizzas.UPDATE_PIZZA_SUCCESS,
+          payload
+        });
+      });
+    });
+  });
+
+  describe("RemovePizza Actions", () => {
+    describe("RemovePizza", () => {
+      it("should create an action", () => {
+        const payload = {
+          id: 2,
+          name: "Pizza #2",
+          toppings: [
+            { id: 1, name: "bacon" },
+            { id: 2, name: "tomato" },
+            { id: 3, name: "mashroom" }
+          ]
+        };
+        const action = new fromPizzas.RemovePizza(payload);
+
+        expect({ ...action }).toEqual({
+          type: fromPizzas.REMOVE_PIZZA,
+          payload
+        });
+      });
+    });
+
+    describe("RemovePizza Fail", () => {
+      it("should create an action", () => {
+        const payload = { message: "Can not loda" };
+        const action = new fromPizzas.RemovePizzaFail(payload);
+        expect({ ...action }).toEqual({
+          type: fromPizzas.REMOVE_PIZZA_FAIL,
+          payload
+        });
+      });
+    });
+
+    describe("RemovePizzas Success", () => {
+      it("Should create an action", () => {
+        const payload = {
+          id: 2,
+          name: "Pizza #2",
+          toppings: [{ id: 1, name: "t1" }, { id: 2, name: "t2" }]
+        };
+        const action = new fromPizzas.RemovePizzaSuccess(payload);
+
+        expect({ ...action }).toEqual({
+          type: fromPizzas.REMOVE_PIZZA_SUCCESS,
+          payload
+        });
+      });
+    });
+  });
 });
